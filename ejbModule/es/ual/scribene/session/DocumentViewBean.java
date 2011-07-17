@@ -23,10 +23,13 @@ import org.apache.tika.sax.BodyContentHandler;
 import org.apache.tika.sax.ContentHandlerDecorator;
 import org.apache.tika.sax.TeeContentHandler;
 import org.apache.tika.sax.XHTMLContentHandler;
+import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Begin;
+import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.international.StatusMessages;
 import org.jboss.seam.log.Log;
@@ -36,6 +39,7 @@ import org.xml.sax.SAXException;
 
 @Stateful
 @Name("documentView")
+@Scope(ScopeType.CONVERSATION)
 public class DocumentViewBean implements DocumentView {
 	@Logger
 	private Log log;
@@ -45,7 +49,7 @@ public class DocumentViewBean implements DocumentView {
 
 	@In(create = true)
 	DocumentoHome documentoHome;
-	
+
 	@In(create = true)
 	ErrorHome errorHome;
 
@@ -84,7 +88,7 @@ public class DocumentViewBean implements DocumentView {
 		 * block log.error(e); }
 		 */
 		InputStream input = null;
-		 
+
 		try {
 			input = new FileInputStream(f);
 			StringWriter htmlBuffer = new StringWriter();
@@ -114,7 +118,7 @@ public class DocumentViewBean implements DocumentView {
 
 		} catch (Exception e) {
 		} finally {
-			if(input != null)
+			if (input != null)
 				try {
 					input.close();
 				} catch (IOException e) {
@@ -124,11 +128,13 @@ public class DocumentViewBean implements DocumentView {
 		}
 		log.info(txt);
 		documento = txt;
-		/*documento = txt.replaceAll("\r\n", "<br/>");
-		documento = documento.replaceAll("\n", "<br/>");
-		documento = documento.replaceAll("   ", "&nbsp;&nbsp;");
-		documento = documento.replaceAll("  ", "&nbsp;&nbsp;");
-		documento = documento.replaceAll("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");*/
+		/*
+		 * documento = txt.replaceAll("\r\n", "<br/>"); documento =
+		 * documento.replaceAll("\n", "<br/>"); documento =
+		 * documento.replaceAll("   ", "&nbsp;&nbsp;"); documento =
+		 * documento.replaceAll("  ", "&nbsp;&nbsp;"); documento =
+		 * documento.replaceAll("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
+		 */
 		/* documento = documento.replaceAll("XPath", "<strong>XPath</strong>"); */
 		log.info("documentView.documentView() action called");
 		statusMessages.add("documentView");
@@ -188,8 +194,9 @@ public class DocumentViewBean implements DocumentView {
 		return handler;
 	}
 
+	@Destroy
 	@Remove
-	public void remove() {
+	public void destroy() {
 
 	}
 

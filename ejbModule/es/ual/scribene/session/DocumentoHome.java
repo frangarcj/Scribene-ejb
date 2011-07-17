@@ -1,16 +1,18 @@
 package es.ual.scribene.session;
 
-import es.ual.scribene.model.entity.*;
-import es.ual.scribene.model.entity.Error;
-import es.ual.scribene.utils.FileUtils;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.remoting.WebRemote;
 import org.jboss.seam.framework.EntityHome;
 import org.richfaces.event.UploadEvent;
 import org.richfaces.model.UploadItem;
+
+import es.ual.scribene.model.entity.Documento;
+import es.ual.scribene.model.entity.Error;
+import es.ual.scribene.utils.FileUtils;
 
 @Name("documentoHome")
 public class DocumentoHome extends EntityHome<Documento> {
@@ -47,6 +49,7 @@ public class DocumentoHome extends EntityHome<Documento> {
 		return isIdDefined() ? getInstance() : null;
 	}
 
+	@WebRemote   
 	public List<Error> getErrores() {
 		return getInstance() == null ? null : new ArrayList<Error>(
 				getInstance().getErrores());

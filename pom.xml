@@ -56,6 +56,10 @@
     	<version>0.9</version>
     	<scope>compile</scope>
     </dependency>
+    <dependency>
+    	<groupId>org.jboss.seam</groupId>
+    	<artifactId>jboss-seam-remoting</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <sourceDirectory>${basedir}/ejbModule</sourceDirectory>
