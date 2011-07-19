@@ -23,8 +23,8 @@ import javax.persistence.Column;
 public class Duda {
 
 	@Id
-	@GeneratedValue(strategy = SEQUENCE, generator = "NormativaGenerator")
-	@SequenceGenerator(name = "NormativaGenerator")
+	@GeneratedValue(strategy = SEQUENCE, generator = "DudaGenerator")
+	@SequenceGenerator(name = "DudaGenerator")
 	private long id;
 	@Basic
 	private String descripcion;
