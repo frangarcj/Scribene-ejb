@@ -12,8 +12,7 @@ public class ErrorHome extends EntityHome<Error> {
 
 	@In(create = true)
 	DocumentoHome documentoHome;
-	@In(create = true)
-	PatronErrorHome patronErrorHome;
+
 
 	public void setErrorId(Long id) {
 		setId(id);
@@ -41,10 +40,7 @@ public class ErrorHome extends EntityHome<Error> {
 		if (documento != null) {
 			getInstance().setDocumento(documento);
 		}
-		PatronError patronError = patronErrorHome.getDefinedInstance();
-		if (patronError != null) {
-			getInstance().setPatronError(patronError);
-		}
+
 	}
 
 	public boolean isWired() {

@@ -16,8 +16,6 @@ public class PatronError {
 
 	@Id
 	private String patron;
-	@OneToMany(mappedBy = "patronError")
-	private List<Error> errores = new ArrayList<Error>();
 	@ManyToOne
 	private Duda duda;
 	public void setPatron(String param) {
@@ -28,13 +26,7 @@ public class PatronError {
 		return patron;
 	}
 
-	public List<Error> getErrores() {
-	    return errores;
-	}
 
-	public void setErrores(List<Error> param) {
-	    this.errores = param;
-	}
 
 	public Duda getDuda() {
 	    return duda;

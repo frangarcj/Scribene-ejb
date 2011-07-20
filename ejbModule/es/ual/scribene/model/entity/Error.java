@@ -20,13 +20,14 @@ public class Error {
 	@SequenceGenerator(name = "ErrorGenerator")
 	private long id;
 	@Basic
+	@Column(length = 255, nullable = false)
 	private String contexto;
-	@ManyToOne
-	private PatronError patronError;
+
 	@ManyToOne
 	private Documento documento;
 	@Basic
 	@Column(length = 100, nullable = false)
+	
 	private String error;
 	@Basic
 	private Long inicio;
@@ -50,13 +51,6 @@ public class Error {
 		return contexto;
 	}
 
-	public PatronError getPatronError() {
-		return patronError;
-	}
-
-	public void setPatronError(PatronError param) {
-		this.patronError = param;
-	}
 
 	public Documento getDocumento() {
 		return documento;

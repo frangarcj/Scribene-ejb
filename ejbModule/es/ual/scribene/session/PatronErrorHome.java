@@ -51,9 +51,6 @@ public class PatronErrorHome extends EntityHome<PatronError> {
 		return isIdDefined() ? getInstance() : null;
 	}
 
-	public List<Error> getErrores() {
-		return getInstance() == null ? null : new ArrayList<Error>(
-				getInstance().getErrores());
-	}
+
 
 }

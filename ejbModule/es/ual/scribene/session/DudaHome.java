@@ -16,6 +16,15 @@ public class DudaHome extends EntityHome<Duda> {
 
 	@In(create = true)
 	CategoriaHome categoriaHome;
+	private String cadenaPatrones;
+
+	public String getCadenaPatrones() {
+		return cadenaPatrones;
+	}
+
+	public void setCadenaPatrones(String cadenaPatrones) {
+		this.cadenaPatrones = cadenaPatrones;
+	}
 
 	public void setDudaId(Long id) {
 		setId(id);
@@ -68,7 +77,21 @@ public class DudaHome extends EntityHome<Duda> {
 
 	@Override
 	public String persist() {
+		if(this.cadenaPatrones!=null&&!this.cadenaPatrones.trim().equals("")){
+			String[] arrayPatrones = cadenaPatrones.split(",");
+			List<PatronError> patrones = new ArrayList<PatronError>();
+			for(int n = 0;n<arrayPatrones.length;n++){
+				if(arrayPatrones[n]==null||arrayPatrones[n].trim().equals(""))
+					continue;
+				PatronError patronError = new PatronError();
+				patronError.setDuda(this.getInstance());
+				patronError.setPatron(arrayPatrones[n]);
+				patrones.add(patronError);
+				getEntityManager().persist(patronError);
 
+			}
+			getInstance().setPatronesError(patrones);
+		}
 		try {
 			Categoria categoria = null;
 
@@ -91,6 +114,23 @@ public class DudaHome extends EntityHome<Duda> {
 
 	@Override
 	public String update() {
+		for(PatronError patron:instance.getPatronesError()){
+			getEntityManager().remove(patron);
+		}
+		if(this.cadenaPatrones!=null&&!this.cadenaPatrones.trim().equals("")){
+			String[] arrayPatrones = cadenaPatrones.split(",");
+			List<PatronError> patrones = new ArrayList<PatronError>();
+			for(int n = 0;n<arrayPatrones.length;n++){
+				if(arrayPatrones[n]==null||arrayPatrones[n].trim().equals(""))
+					continue;
+				PatronError patronError = new PatronError();
+				patronError.setDuda(this.instance);
+				patronError.setPatron(arrayPatrones[n]);
+				patrones.add(patronError);
+				getEntityManager().persist(patronError);
+			}
+			instance.setPatronesError(patrones);
+		}
 		try {
 			Categoria categoria = null;
 
@@ -111,4 +151,21 @@ public class DudaHome extends EntityHome<Duda> {
 		return super.update();
 	}
 
+	@Override
+	public Duda find() {
+		Duda duda = super.find();
+		if(duda!=null){
+			if(duda.getCategoria()!=null)
+				categoriaHome.setInstance(duda.getCategoria());
+			if(duda.getPatronesError()!=null){
+				this.cadenaPatrones="";
+				for(PatronError patron:duda.getPatronesError()){
+					this.cadenaPatrones += patron.getPatron() + ",";
+				}
+			}
+		}
+		return duda;
+	}
+
+	
 }
