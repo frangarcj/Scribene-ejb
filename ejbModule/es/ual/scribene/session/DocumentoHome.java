@@ -65,11 +65,11 @@ public class DocumentoHome extends EntityHome<Documento> {
 		getLog().info("Se guarda en #0 #1", archivo.getCanonicalPath(),
 				instance.getId());
 		this.persist();
-		getLog().info("Se guarda en #0 #1", archivo.getCanonicalPath(),
+		getLog().info("Se guarda en #0 #1", new File(".").getCanonicalPath(),
 				instance.getId());
 		this.setId(instance.getId());
 		FileUtils.copyFile(item.getFile(), new File(
-				"C:/Users/Paco/Mis Programas/Scribene/doc" + instance.getId()
+				"doc" + instance.getId()
 						+ "-" + instance.getNombreFichero()));
 
 	}

@@ -17,7 +17,7 @@ public class Documento {
 	private long id;
 	@Basic
 	private String nombreFichero;
-	@OneToMany(mappedBy = "documento")
+	@OneToMany(mappedBy = "documento", cascade={CascadeType.ALL})
 	private List<Error> errores = new ArrayList<Error>();
 
 	public long getId() {

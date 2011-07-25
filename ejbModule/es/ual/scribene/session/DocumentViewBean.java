@@ -74,7 +74,7 @@ public class DocumentViewBean implements DocumentView {
 		documentoHome.setDocumentoId(documentoId);
 		TikaConfig tc = TikaConfig.getDefaultConfig();
 
-		File f = new File("C:/Users/Paco/Mis Programas/Scribene/doc"
+		File f = new File("doc"
 				+ documentoHome.getInstance().getId() + "-"
 				+ documentoHome.getInstance().getNombreFichero());
 		String txt = null;
