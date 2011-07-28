@@ -78,7 +78,7 @@ public class DudaHome extends EntityHome<Duda> {
 	@Override
 	public String persist() {
 		if(this.cadenaPatrones!=null&&!this.cadenaPatrones.trim().equals("")){
-			String[] arrayPatrones = cadenaPatrones.split(",");
+			String[] arrayPatrones = cadenaPatrones.split(";");
 			List<PatronError> patrones = new ArrayList<PatronError>();
 			for(int n = 0;n<arrayPatrones.length;n++){
 				if(arrayPatrones[n]==null||arrayPatrones[n].trim().equals(""))
@@ -118,7 +118,7 @@ public class DudaHome extends EntityHome<Duda> {
 			getEntityManager().remove(patron);
 		}
 		if(this.cadenaPatrones!=null&&!this.cadenaPatrones.trim().equals("")){
-			String[] arrayPatrones = cadenaPatrones.split(",");
+			String[] arrayPatrones = cadenaPatrones.split(";");
 			List<PatronError> patrones = new ArrayList<PatronError>();
 			for(int n = 0;n<arrayPatrones.length;n++){
 				if(arrayPatrones[n]==null||arrayPatrones[n].trim().equals(""))
@@ -160,7 +160,7 @@ public class DudaHome extends EntityHome<Duda> {
 			if(duda.getPatronesError()!=null){
 				this.cadenaPatrones="";
 				for(PatronError patron:duda.getPatronesError()){
-					this.cadenaPatrones += patron.getPatron() + ",";
+					this.cadenaPatrones += patron.getPatron() + ";";
 				}
 			}
 		}

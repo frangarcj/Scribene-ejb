@@ -43,7 +43,10 @@ public class Duda {
 	@Basic
 	@Column(unique = true, length = 50)
 	private String nombre;
-
+	@Basic
+	@Column(unique = true, length = 255)
+	private String etiquetas;
+	
 	public long getId() {
 		return id;
 	}
@@ -114,6 +117,14 @@ public class Duda {
 
 	public String getNombre() {
 		return nombre;
+	}
+
+	public void setEtiquetas(String etiquetas) {
+		this.etiquetas = etiquetas;
+	}
+
+	public String getEtiquetas() {
+		return etiquetas;
 	}
 
 }

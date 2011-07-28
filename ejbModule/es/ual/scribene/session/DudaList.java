@@ -11,10 +11,12 @@ public class DudaList extends EntityQuery<Duda> {
 	private static final String EJBQL = "select duda from Duda duda";
 
 	private static final String[] RESTRICTIONS = {
-			"lower(duda.descripcion) like lower(concat(#{dudaList.duda.descripcion},'%'))",
-			"lower(duda.ejemploBuenUso) like lower(concat(#{dudaList.duda.ejemploBuenUso},'%'))",
-			"lower(duda.ejemploMalUso) like lower(concat(#{dudaList.duda.ejemploMalUso},'%'))",
-			"lower(duda.fuente) like lower(concat(#{dudaList.duda.fuente},'%'))", };
+			"lower(duda.nombre) like lower(concat('%',concat(#{dudaList.duda.nombre},'%')))",
+			"lower(duda.descripcion) like lower(concat('%',concat(#{dudaList.duda.descripcion},'%')))",
+			"lower(duda.ejemploBuenUso) like lower(concat('%',concat(#{dudaList.duda.ejemploBuenUso},'%')))",
+			"lower(duda.ejemploMalUso) like lower(concat('%',concat(#{dudaList.duda.ejemploMalUso},'%')))",
+			"lower(duda.fuente) like lower(concat('%',concat(#{dudaList.duda.fuente},'%')))", 
+			"lower(duda.etiquetas) like lower(concat('%',concat(#{dudaList.duda.etiquetas},'%')))", };
 
 	private Duda duda = new Duda();
 
