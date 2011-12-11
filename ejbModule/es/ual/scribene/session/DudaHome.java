@@ -11,12 +11,26 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.framework.EntityHome;
 
+import bsh.This;
+
 @Name("dudaHome")
 public class DudaHome extends EntityHome<Duda> {
 
 	@In(create = true)
 	CategoriaHome categoriaHome;
+
+	
+    private String cadenaCategoria;
+	
 	private String cadenaPatrones;
+
+	public void setCadenaCategoria(String cadenaCategoria) {
+		this.cadenaCategoria = cadenaCategoria;
+	}
+
+	public String getCadenaCategoria() {
+		return cadenaCategoria;
+	}
 
 	public String getCadenaPatrones() {
 		return cadenaPatrones;
@@ -100,14 +114,16 @@ public class DudaHome extends EntityHome<Duda> {
 					.createQuery(
 							"Select categoria from Categoria categoria where descripcion = :descripcion")
 					.setParameter("descripcion",
-							categoriaHome.getInstance().getDescripcion())
+							this.cadenaCategoria)
 					.getSingleResult();
 
 			getInstance().setCategoria(categoria);
-
+			categoriaHome.clearInstance();
 		} catch (Exception e) {
-			getInstance().setCategoria(categoriaHome.getInstance());
-			this.getEntityManager().persist(categoriaHome.getInstance());
+			Categoria categoria = new Categoria();
+			categoria.setDescripcion(cadenaCategoria);
+			getInstance().setCategoria(categoria);
+			this.getEntityManager().persist(categoria);
 		}
 		return super.persist();
 	}
@@ -139,14 +155,16 @@ public class DudaHome extends EntityHome<Duda> {
 					.createQuery(
 							"Select categoria from Categoria categoria where descripcion = :descripcion")
 					.setParameter("descripcion",
-							categoriaHome.getInstance().getDescripcion())
+							this.cadenaCategoria)
 					.getSingleResult();
 
 			getInstance().setCategoria(categoria);
-
+			categoriaHome.clearInstance();
 		} catch (Exception e) {
-			getInstance().setCategoria(categoriaHome.getInstance());
-			this.getEntityManager().persist(categoriaHome.getInstance());
+			Categoria categoria = new Categoria();
+			categoria.setDescripcion(cadenaCategoria);
+			getInstance().setCategoria(categoria);
+			this.getEntityManager().persist(categoria);
 		}
 		return super.update();
 	}
@@ -155,8 +173,10 @@ public class DudaHome extends EntityHome<Duda> {
 	public Duda find() {
 		Duda duda = super.find();
 		if(duda!=null){
-			if(duda.getCategoria()!=null)
+			if(duda.getCategoria()!=null){
 				categoriaHome.setInstance(duda.getCategoria());
+				this.cadenaCategoria = duda.getCategoria().getDescripcion();
+			}
 			if(duda.getPatronesError()!=null){
 				this.cadenaPatrones="";
 				for(PatronError patron:duda.getPatronesError()){
@@ -166,6 +186,8 @@ public class DudaHome extends EntityHome<Duda> {
 		}
 		return duda;
 	}
+
+
 
 	
 }

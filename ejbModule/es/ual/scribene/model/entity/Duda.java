@@ -3,9 +3,11 @@ package es.ual.scribene.model.entity;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,10 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import es.ual.scribene.model.entity.Error;
-import java.util.Collection;
-import java.lang.String;
-import javax.persistence.Column;
+
+import org.hibernate.validator.Length;
+
+import es.ual.annotations.Unique;
 
 @Entity(name = "Duda")
 @Table(name = "T_DUDA")
@@ -27,10 +29,16 @@ public class Duda {
 	@SequenceGenerator(name = "DudaGenerator")
 	private long id;
 	@Basic
+	@Column(length = 1000)
+	@Length(max=500)
 	private String descripcion;
 	@Basic
+	@Column(length = 500)
+	@Length(max=500)
 	private String ejemploMalUso;
 	@Basic
+	@Column(length = 255)
+	@Length(max=255)
 	private String fuente;
 	@OneToMany(mappedBy = "duda")
 	private List<PatronError> patronesError = new ArrayList<PatronError>();
@@ -39,12 +47,17 @@ public class Duda {
 	@OneToMany(mappedBy = "duda")
 	private Collection<Error> errores = new ArrayList<Error>();
 	@Basic
+	@Column(length = 500)
+	@Length(max=500)
 	private String ejemploBuenUso;
 	@Basic
 	@Column(unique = true, length = 50)
+	@Length(max=50)
+	@Unique(entityName = "Duda", fieldName = "nombre", idProvider="dudaHome")
 	private String nombre;
 	@Basic
-	@Column(unique = true, length = 255)
+	@Column(length = 255)
+	@Length(max=255)
 	private String etiquetas;
 	
 	public long getId() {
